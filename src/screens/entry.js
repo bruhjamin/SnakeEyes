@@ -38,7 +38,7 @@ export default function Entry({ navigation }) {
 
     useEffect(() => {
         getUsers();
-    }, [user]);
+    }, [navigation, user]);
     
     const isDarkMode = useColorScheme() === 'dark';
 
@@ -60,7 +60,7 @@ export default function Entry({ navigation }) {
             <View style={[styles.container, backgroundColor]}>
                 <Text 
                     style={[textColor, styles.title]} 
-                    onPress={()=> getUsers()}
+                    // onPress={()=> getUsers()}
                 > Select your profile
                 </Text>
                 <ScrollView>

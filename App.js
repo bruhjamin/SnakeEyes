@@ -30,7 +30,7 @@ const store = createStore(reducer);
 
 function App() {
     GoogleSignin.configure({
-        webClientId: '132129768582-te8tvv72al2p2p1kga9qkrbhp9rictd3.apps.googleusercontent.com',
+        webClientId: Config.CLIENT_ID,
     });
 
     return (
