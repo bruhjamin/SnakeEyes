@@ -12,7 +12,7 @@ import Colors from "../../../../constants/Colors";
 import Player from "./player";
 
 export default function Battle() {
-    const user = useSelector((state)=> state.user);
+    // const user = useSelector((state)=> state.user);
 
     const isDarkMode = useColorScheme() === 'dark';
 

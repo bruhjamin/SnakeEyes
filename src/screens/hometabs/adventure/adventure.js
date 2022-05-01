@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import Colors from "../../../constants/Colors";
 
 export default function Adventure({ navigation }) {
-    const user = useSelector((state)=> state.user);
+    // const user = useSelector((state)=> state.user);
     
     const isDarkMode = useColorScheme() === 'dark';
 

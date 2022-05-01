@@ -4,13 +4,14 @@ import {
     Text,
     useColorScheme,
     View,
+    TouchableOpacity
 } from 'react-native';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 import Colors from "../../constants/Colors";
 
-export default function Home() {
-    const user = useSelector((state)=> state.user);
+export default function Home({ navigation }) {
+    // const user = useSelector((state)=> state.user);
     
     const isDarkMode = useColorScheme() === 'dark';
 
@@ -29,6 +30,14 @@ export default function Home() {
             <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
                 <Text style={textColor}> There is nothing here yet </Text>
             </View>
+            <TouchableOpacity 
+                style={styles.buttonContainer}
+                onPress={()=> {
+                    navigation.navigate('Ads')
+                }}
+            >
+                <Text style={textColor}>View Ad</Text>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -42,4 +51,10 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold'
     }, 
+    buttonContainer: {
+        marginTop: 10,
+        padding: 10,
+        borderWidth: 1,
+        borderColor: Colors.light
+    }
 });

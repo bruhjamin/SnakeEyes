@@ -21,7 +21,6 @@ export default function Player({ attack, isUser }) {
         }
     }, [doAttack])
     
-
     return (
         <View 
             style={

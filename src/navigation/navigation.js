@@ -5,6 +5,7 @@ import BottomTabs from './bottomTabs';
 import Entry from '../screens/entry';
 import Create from '../screens/create';
 import Login from '../screens/login';
+import Ads from '../screens/rewardAd';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,13 @@ export default function Navigation() {
                 name="Main" 
                 component={BottomTabs} 
                 options={{ headerShown: false}}
+            />
+            <Stack.Screen
+                name="Ads" 
+                component={Ads} 
+                options={{ 
+                    headerShown: false,
+                }}
             />
         </Stack.Navigator>
     );

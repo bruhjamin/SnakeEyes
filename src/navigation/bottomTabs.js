@@ -1,7 +1,7 @@
 import React from 'react';
 import Home from '../screens/hometabs/home';
 import Profile from '../screens/hometabs/profile';
-import Adventure from '../screens/hometabs/adventure/adventure';
+// import Adventure from '../screens/hometabs/adventure/adventure';
 import AdventureNavigation from '../screens/hometabs/adventure/navigation';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 

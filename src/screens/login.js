@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {
-    ScrollView,
+    // ScrollView,
     StyleSheet,
     Text,
     useColorScheme,
     View,
     TouchableOpacity,
-    Button
+    // Button
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
@@ -17,7 +17,7 @@ import { useDispatch } from "react-redux";
 export default function Login({ navigation }) {
     const [initializing, setInitializing] = useState(true);
     const dispatch = useDispatch();
-    const authUser = auth();
+    // const authUser = auth();
 
     const isDarkMode = useColorScheme() === 'dark';
 

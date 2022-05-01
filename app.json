@@ -1,4 +1,8 @@
 {
-  "name": "SnakeEyes",
-  "displayName": "SnakeEyes"
+    "name": "SnakeEyes",
+    "displayName": "SnakeEyes",
+    "react-native-google-mobile-ads": {
+        "android_app_id": "ca-app-pub-1594751600470725~3050464272",
+        "ios_app_id": "ca-app-pub-1594751600470725~3050464272"
+    }
 }

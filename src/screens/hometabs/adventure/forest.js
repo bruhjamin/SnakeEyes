@@ -12,7 +12,7 @@ import Colors from "../../../constants/Colors";
 import Battle from "./components/battle";
 
 export default function Forest() {
-    const user = useSelector((state)=> state.user);
+    // const user = useSelector((state)=> state.user);
     
     const isDarkMode = useColorScheme() === 'dark';
 
