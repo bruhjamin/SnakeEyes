@@ -3,7 +3,6 @@ import {
     // ScrollView,
     StyleSheet,
     Text,
-    useColorScheme,
     View,
     TouchableOpacity,
     // Button
@@ -19,17 +18,6 @@ export default function Login({ navigation }) {
     const dispatch = useDispatch();
     // const authUser = auth();
 
-    const isDarkMode = useColorScheme() === 'dark';
-
-    const backgroundColor = {
-        backgroundColor: isDarkMode ? Colors.dark : Colors.light,
-    };
-
-    const textColor = {
-        color: isDarkMode ? Colors.darkText : Colors.lightText,
-        fontSize: 20
-    }
-    
     // Handle user state changes
     function onAuthStateChanged(user) {
         if(user){
@@ -62,10 +50,10 @@ export default function Login({ navigation }) {
                 onPress={() => {
                     onGoogleButtonPress()
                     .then(() => {})
-                    .catch((e) => {})
+                    .catch((e) => {console.log(e)})
                 }}
             >
-                <Text style={textColor}>Sign in with Google</Text>
+                <Text style={styles.text}>Sign in with Google</Text>
             </TouchableOpacity>
         );
     }
@@ -73,8 +61,8 @@ export default function Login({ navigation }) {
     if (initializing) return null;
     
     return (
-        <View style={[styles.container, backgroundColor]}>
-            <Text style={[ textColor, styles.title]}>Sign in</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Sign in</Text>
             <GoogleSignIn />
         </View>
     );
@@ -84,9 +72,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-
+        backgroundColor: Colors.dark
     },
     title: {
+        color: Colors.darkText,
         fontSize: 30,
         fontWeight: 'bold'
     }, 
@@ -95,5 +84,9 @@ const styles = StyleSheet.create({
         padding: 10,
         borderWidth: 1,
         borderColor: Colors.light
+    },
+    text: {
+        color: Colors.darkText,
+        fontSize: 20
     }
 });

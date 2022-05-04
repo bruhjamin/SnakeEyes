@@ -3,21 +3,21 @@ import {
     ScrollView,
     StyleSheet,
     Text,
-    useColorScheme,
     View,
     TouchableOpacity,
 } from 'react-native';
 import { useDispatch } from "react-redux";
 import firestore from '@react-native-firebase/firestore';
-import { useSelector } from "react-redux";
 import Colors from "../constants/Colors";
+import auth from '@react-native-firebase/auth';
 
 export default function Entry({ navigation }) {
     const [profiles, setProfiles] = useState([]);
-    const user = useSelector((state)=> state.user);
+    const user = auth().currentUser;
+
     const dispatch = useDispatch();
 
-    const getUsers = async () => {
+    const getProfiles = async () => {
         try{
             if(user.uid){
                 const subscriber = await firestore()
@@ -32,34 +32,36 @@ export default function Entry({ navigation }) {
                 setProfiles(profile.sort((a, b) => b.level - a.level)); 
             }
         } catch (e) {
-            console.log('GET ERROR',e)
+            console.log('GET ERROR', e)
         }
     }
 
     useEffect(() => {
-        getUsers();
+        getProfiles();
+        navigation.addListener('beforeRemove', (e) => {
+            // Prevent default behavior of leaving the screen
+            if(e.data.action.type === 'GO_BACK'){
+                e.preventDefault();
+            }
+        })
     }, [navigation, user]);
-    
-    const isDarkMode = useColorScheme() === 'dark';
 
-    const backgroundColor = {
-        backgroundColor: isDarkMode ? Colors.dark : Colors.light,
-    };
+    useEffect(() => {
+        if(profiles.length > 0){
+            navigation.navigate('Main', { screen: 'Home' });
+            dispatch({ type: 'SET_PROFILE', profile: profiles[0] });
+        }
+    }, [profiles])
 
-    const textColor = {
-        color: isDarkMode ? Colors.darkText : Colors.lightText,
-        fontSize: 20
-    }
-
-    if(user === {}){
+    if(!user){
         return(
-            <View></View>
+            <View/>
         );
     } else {
         return (
-            <View style={[styles.container, backgroundColor]}>
+            <View style={styles.container}>
                 <Text 
-                    style={[textColor, styles.title]} 
+                    style={styles.title} 
                     // onPress={()=> getUsers()}
                 > Select your profile
                 </Text>
@@ -79,8 +81,8 @@ export default function Entry({ navigation }) {
                                 }}
                                 key={index} 
                             >
-                                <Text style={textColor} > {profile.name} </Text>
-                                <Text style={textColor} > Level: {profile.level} </Text>
+                                <Text style={styles.text} > {profile.name} </Text>
+                                <Text style={styles.text} > Level: {profile.level} </Text>
                             </TouchableOpacity>
                         );
                     })}
@@ -89,10 +91,10 @@ export default function Entry({ navigation }) {
                         style={styles.userContainer} 
                         onPress={() => navigation.navigate('Create')}
                     >
-                        <Text style={textColor} > + Create new profile </Text>
+                        <Text style={styles.text} > + Create new profile </Text>
                     </TouchableOpacity>)}
                     <View style={styles.profileNum}>
-                        <Text style={[styles.textColor, {fontSize: 14}]}>{profiles.length}/3</Text> 
+                        <Text style={styles.smallText}>{profiles.length}/3</Text> 
                     </View>
                 </ScrollView> 
             </View>
@@ -103,11 +105,13 @@ export default function Entry({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20
+        padding: 20,
+        backgroundColor: Colors.dark
     },
     title: {
         fontSize: 30,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: Colors.darkText,
     }, 
     userContainer: {
         marginTop: 10,
@@ -121,5 +125,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end',
         margin: 5
+    },
+    text: {
+        color: Colors.darkText,
+        fontSize: 20
+    },
+    smallText: {
+        color: Colors.darkText,
+        fontSize: 14
     }
 });

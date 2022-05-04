@@ -9,16 +9,11 @@ import Config from 'react-native-config';
 import mobileAds, { MaxAdContentRating } from 'react-native-google-mobile-ads';
 
 const initialState = {
-	user: {},
     profile: {}
 }
 
 const reducer = (state = initialState, action) =>{
 	switch(action.type){
-		case 'CLEAR_USER':
-			return {...state, user: {}}
-		case 'SET_USER':
-			return {...state, user: action?.user ? action.user : null}
         case 'CLEAR_PROFILE':
             return {...state, profile: {}}
         case 'SET_PROFILE':

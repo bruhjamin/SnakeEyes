@@ -8,27 +8,21 @@ import {
 
 import Colors from "../../../constants/Colors";
 
-export default function Adventure({ navigation }) {
+export default function Home({ navigation }) {
     return (
         <View style={styles.container}>
-            <Text style={styles.title} > Adventure </Text>
+            <Text style={styles.title} > Town </Text>
             <TouchableOpacity 
                 style={styles.buttonContainer}
-                onPress={()=> navigation.navigate('Forest')}
+                onPress={()=> {navigation.navigate('Shop')}}
             >
-                <Text style={styles.text}> Search the Forest </Text>
+                <Text style={styles.text}>Shop</Text>
             </TouchableOpacity>
             <TouchableOpacity 
                 style={styles.buttonContainer}
-                onPress={()=> {/*TODO: MAKE CAVE*/}}
+                onPress={()=> {navigation.navigate('Quests')}}
             >
-                <Text style={styles.text}> Explore the Cave </Text>
-            </TouchableOpacity>
-            <TouchableOpacity 
-                style={styles.buttonContainer}
-                onPress={()=> {/*TODO: MAKE CASTLE*/}}
-            >
-                <Text style={styles.text}> Enter the Castle </Text>
+                <Text style={styles.text}>Guild</Text>
             </TouchableOpacity>
         </View>
     );
@@ -49,9 +43,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         padding: 10,
         borderWidth: 1,
-        borderColor: Colors.light,
-        justifyContent: 'space-between',
-        flexDirection: 'row'
+        borderColor: Colors.light
     },
     text: {
         color: Colors.darkText,

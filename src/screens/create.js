@@ -2,28 +2,18 @@ import React, { useState } from "react";
 import {
     StyleSheet,
     Text,
-    useColorScheme,
     View,
     TextInput,
     TouchableOpacity
   } from 'react-native';
 
 import Colors from "../constants/Colors";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 export default function Create({ navigation }) {
-    const user = useSelector((state)=> state.user);
-    const isDarkMode = useColorScheme() === 'dark';
-
-    const backgroundColor = {
-        backgroundColor: isDarkMode ? Colors.dark : Colors.light,
-    };
-
-    const textColor = {
-        color: isDarkMode ? Colors.darkText : Colors.lightText,
-        fontSize: 20
-    }
+    const user = auth().currentUser;
 
     const [name, setName] = useState('');
     const dispatch = useDispatch();
@@ -32,18 +22,25 @@ export default function Create({ navigation }) {
         firestore().collection('users').doc(user.uid).collection('profiles').add({
             name: name,
             level: 0,
+            free_stats: 0,
             exp: 0,
+            luck: 0,
+            strengh: 5,
+            hp: 5,
+            beans: 0,
+            magical_beans: 0,
         })
     }
 
     return (
-        <View style={[styles.container, backgroundColor]}>
-            <Text style={[textColor, styles.title]} > Create a new profile </Text>
+        <View style={styles.container}>
+            <Text style={styles.title} > Create a new profile </Text>
             <TextInput
                 style={styles.input}
+                placeholderTextColor={Colors.lightText}
                 onChangeText={setName}
                 value={name}
-                placeholder="Name"
+                placeholder="Input name"
                 autoCorrect={false}
             />
             <TouchableOpacity 
@@ -60,7 +57,7 @@ export default function Create({ navigation }) {
                     navigation.navigate('Main', {screen: 'Home'});
                 }}
             >
-                <Text style={textColor}> Submit </Text>
+                <Text style={styles.text}> Submit </Text>
             </TouchableOpacity>
         </View>
     );
@@ -69,9 +66,11 @@ export default function Create({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20
+        padding: 20,
+        backgroundColor: Colors.dark
     },
     title: {
+        color: Colors.darkText,
         fontSize: 30,
         fontWeight: 'bold'
     }, 
@@ -87,5 +86,9 @@ const styles = StyleSheet.create({
         padding: 10,
         borderWidth: 1,
         borderColor: Colors.light
-    }
+    },
+    text: {
+        color: Colors.darkText,
+        fontSize: 20
+    },
 });
