@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
     StyleSheet,
     Text,
-    useColorScheme,
     View,
 } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -12,25 +11,14 @@ import Colors from "../../constants/Colors";
 export default function Profile() {
     const profile = useSelector((state)=> state.profile);
     const user = useSelector((state)=> state.user);
-    
-    const isDarkMode = useColorScheme() === 'dark';
-
-    const backgroundColor = {
-        backgroundColor: isDarkMode ? Colors.dark : Colors.light,
-    };
-
-    const textColor = {
-        color: isDarkMode ? Colors.darkText : Colors.lightText,
-        fontSize: 20
-    }
 
     return (
-        <View style={[styles.container, backgroundColor]}>
-            <Text style={[textColor, styles.title]} > Profile </Text>
-            <Text style={textColor}> Name: {profile.name} </Text>
-            <Text style={textColor}> Level: {profile.level} </Text>
+        <View style={styles.container}>
+            <Text style={styles.title} > Profile </Text>
+            <Text style={styles.text}> Name: {profile.name} </Text>
+            <Text style={styles.text}> Level: {profile.level} </Text>
             <View style={styles.id}>
-                <Text style={[textColor, {fontSize: 14}]}> UId: {user.uid} </Text>
+                <Text style={styles.smallText}> UId: {user.uid} </Text>
             </View>
         </View>
     );
@@ -39,9 +27,11 @@ export default function Profile() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20
+        padding: 20,
+        backgroundColor: Colors.dark
     },
     title: {
+        color: Colors.darkText,
         fontSize: 30,
         fontWeight: 'bold'
     }, 
@@ -49,5 +39,13 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: 0,
         right: 0
+    },
+    text: {
+        color: Colors.darkText,
+        fontSize: 20
+    },
+    smallText:{
+        color: Colors.darkText,
+        fontSize: 14
     }
 });

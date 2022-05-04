@@ -5,6 +5,8 @@ import Profile from '../screens/hometabs/profile';
 import AdventureNavigation from '../screens/hometabs/adventure/navigation';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+import Colors from '../constants/Colors';
+
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabs() {
@@ -18,7 +20,7 @@ export default function BottomTabs() {
                 },
                 tabBarIconStyle: { display: "none" },
                 tabBarStyle: {
-                    backgroundColor: 'black'
+                    backgroundColor: Colors.bottomTabs
                 }
             }}
         >

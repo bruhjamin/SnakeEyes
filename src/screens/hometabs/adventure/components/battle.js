@@ -1,33 +1,15 @@
 import React, { useEffect, useState } from "react";
 import {
     StyleSheet,
-    useColorScheme,
     View,
     TouchableOpacity,
     Text
 } from 'react-native';
-import { useSelector } from 'react-redux';
 
 import Colors from "../../../../constants/Colors";
 import Player from "./player";
 
 export default function Battle() {
-    // const user = useSelector((state)=> state.user);
-    const [doAttack, setDoAttack] = useState(false);
-
-    const isDarkMode = useColorScheme() === 'dark';
-
-    const textColor = {
-        color: isDarkMode ? Colors.darkText : Colors.lightText,
-        fontSize: 20
-    }
-
-    useEffect(()=>{
-        if(doAttack){
-            setDoAttack(false)
-        }
-    }, [doAttack])
-
     return (
         <View style={styles.gameContainer}>
             <View style={styles.displayContainer}>
@@ -51,17 +33,17 @@ export default function Battle() {
                     style={styles.buttonContainer}
                     onPress={()=> setDoAttack(true)}
                 >
-                    <Text style={textColor}>Roll</Text>
+                    <Text style={styles.text}>Roll</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                     style={styles.buttonContainer}
                 >
-                    <Text style={textColor}>Rest</Text>
+                    <Text style={styles.text}>Rest</Text>
                 </TouchableOpacity>
                 <TouchableOpacity  
                     style={styles.buttonContainer}
                 >
-                    <Text style={textColor}>Items</Text>
+                    <Text style={styles.text}>Items</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -105,5 +87,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row', 
         alignItems: 'center',
         justifyContent: 'space-between'
-    }
+    },
+    text: {
+        color: Colors.darkText,
+        fontSize: 20
+    },
 });

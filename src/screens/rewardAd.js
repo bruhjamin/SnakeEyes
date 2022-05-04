@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
     StyleSheet,
     Text,
-    useColorScheme,
     View,
 } from 'react-native';
 import { RewardedAd,RewardedAdEventType, TestIds } from 'react-native-google-mobile-ads';
@@ -18,17 +17,6 @@ const rewarded = RewardedAd.createForAdRequest(adUnitId, {
 
 export default function Ads({ navigation }) {
     const [loaded, setLoaded] = useState(false);
-    
-    const isDarkMode = useColorScheme() === 'dark';
-
-    const backgroundColor = {
-        backgroundColor: isDarkMode ? Colors.dark : Colors.light,
-    };
-
-    const textColor = {
-        color: isDarkMode ? Colors.darkText : Colors.lightText,
-        fontSize: 20
-    }
 
     useEffect(() => {
         const unsubscribeLoaded = rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => {
@@ -59,8 +47,8 @@ export default function Ads({ navigation }) {
     }, [loaded])
 
     return (
-        <View style={[styles.container, backgroundColor]}>
-            <Text style={textColor}>Loading Ad</Text>
+        <View style={styles.container}>
+            <Text style={styles.text}>Loading Ad</Text>
         </View>
     );
 }
@@ -69,7 +57,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: Colors.dark
     },
     title: {
         fontSize: 30,
@@ -80,5 +69,9 @@ const styles = StyleSheet.create({
         padding: 10,
         borderWidth: 1,
         borderColor: Colors.light
+    },
+    text: {
+        color: Colors.darkText,
+        fontSize: 20
     }
 });
