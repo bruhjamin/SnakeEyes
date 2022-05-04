@@ -8,7 +8,7 @@ import { RewardedAd,RewardedAdEventType, TestIds } from 'react-native-google-mob
 
 import Colors from "../constants/Colors";
 
-const adUnitId = __DEV__ ? TestIds.REWARDED : 'ca-app-pub-1594751600470725/4910340854';
+const adUnitId = __DEV__ ? TestIds.REWARDED : TestIds.REWARDED;
 
 const rewarded = RewardedAd.createForAdRequest(adUnitId, {
     requestNonPersonalizedAdsOnly: true,

@@ -50,7 +50,7 @@ export default function Login({ navigation }) {
                 onPress={() => {
                     onGoogleButtonPress()
                     .then(() => {})
-                    .catch((e) => {})
+                    .catch((e) => {console.log(e)})
                 }}
             >
                 <Text style={styles.text}>Sign in with Google</Text>
