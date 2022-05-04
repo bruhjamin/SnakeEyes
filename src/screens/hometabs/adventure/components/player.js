@@ -2,31 +2,45 @@ import React, { useState, useEffect } from "react";
 import {
     StyleSheet,
     View,
-    Dimensions
+    Dimensions,
+    Text
 } from 'react-native';
+import Dice from "./dice6";
 
 const width = Dimensions.get('window').width;
 
 export default function Player({ attack, isUser }) {
     const [doAttack, setDoAttack] = useState(false);
+    const [roll, setRoll] = useState(0);
     
     useEffect(() => {
-        setDoAttack(attack)
+        if(attack){
+            setDoAttack(attack)
+        }
     }, [attack])
 
     useEffect(() => {
         if(doAttack){
             //animate attack
-            setDoAttack(false);
+            setTimeout(()=> setDoAttack(false), 200);
+            setRoll(parseInt(Dice(6)));
         }
     }, [doAttack])
+
+    useEffect(() => {
+        if(roll != 0){
+            setTimeout(()=> setRoll(0), 800);
+        }
+    }, [roll])
     
     return (
         <View 
             style={
-                [styles.player, {}]
+                [styles.player, {backgroundColor: (roll > 3) ? 'green' : 'blue'}]
             }
-        />
+        >
+            <Text>{roll}</Text>
+        </View>
     );
 }
 
