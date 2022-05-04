@@ -25,10 +25,10 @@ export default function Home({ navigation }) {
     }
 
     return (
-        <View style={[styles.container, backgroundColor]}>
-            <Text style={[textColor, styles.title]} > Town </Text>
+        <View style={styles.container}>
+            <Text style={styles.title} > Town </Text>
             <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
-                <Text style={textColor}> There is nothing here yet </Text>
+                <Text style={styles.text}> There is nothing here yet </Text>
             </View>
             <TouchableOpacity 
                 style={styles.buttonContainer}
@@ -36,7 +36,7 @@ export default function Home({ navigation }) {
                     navigation.navigate('Ads')
                 }}
             >
-                <Text style={textColor}>View Ad</Text>
+                <Text style={styles.text}>View Ad</Text>
             </TouchableOpacity>
         </View>
     );
@@ -45,9 +45,11 @@ export default function Home({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20
+        padding: 20,
+        backgroundColor: Colors.dark
     },
     title: {
+        color: Colors.darkText,
         fontSize: 30,
         fontWeight: 'bold'
     }, 
@@ -56,5 +58,9 @@ const styles = StyleSheet.create({
         padding: 10,
         borderWidth: 1,
         borderColor: Colors.light
-    }
+    },
+    text: {
+        color: Colors.darkText,
+        fontSize: 20
+    },
 });

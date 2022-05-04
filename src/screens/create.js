@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
     StyleSheet,
     Text,
-    useColorScheme,
     View,
     TextInput,
     TouchableOpacity
@@ -14,16 +13,6 @@ import firestore from '@react-native-firebase/firestore';
 
 export default function Create({ navigation }) {
     const user = useSelector((state)=> state.user);
-    const isDarkMode = useColorScheme() === 'dark';
-
-    const backgroundColor = {
-        backgroundColor: isDarkMode ? Colors.dark : Colors.light,
-    };
-
-    const textColor = {
-        color: isDarkMode ? Colors.darkText : Colors.lightText,
-        fontSize: 20
-    }
 
     const [name, setName] = useState('');
     const dispatch = useDispatch();
@@ -37,13 +26,14 @@ export default function Create({ navigation }) {
     }
 
     return (
-        <View style={[styles.container, backgroundColor]}>
-            <Text style={[textColor, styles.title]} > Create a new profile </Text>
+        <View style={styles.container}>
+            <Text style={styles.title} > Create a new profile </Text>
             <TextInput
                 style={styles.input}
+                placeholderTextColor={Colors.darkText}
                 onChangeText={setName}
                 value={name}
-                placeholder="Name"
+                placeholder="Input name"
                 autoCorrect={false}
             />
             <TouchableOpacity 
@@ -60,7 +50,7 @@ export default function Create({ navigation }) {
                     navigation.navigate('Main', {screen: 'Home'});
                 }}
             >
-                <Text style={textColor}> Submit </Text>
+                <Text style={styles.text}> Submit </Text>
             </TouchableOpacity>
         </View>
     );
@@ -69,9 +59,11 @@ export default function Create({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20
+        padding: 20,
+        backgroundColor: Colors.dark
     },
     title: {
+        color: Colors.darkText,
         fontSize: 30,
         fontWeight: 'bold'
     }, 
@@ -87,5 +79,9 @@ const styles = StyleSheet.create({
         padding: 10,
         borderWidth: 1,
         borderColor: Colors.light
-    }
+    },
+    text: {
+        color: Colors.darkText,
+        fontSize: 20
+    },
 });
