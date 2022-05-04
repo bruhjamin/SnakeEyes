@@ -2,41 +2,27 @@ import React from "react";
 import {
     StyleSheet,
     Text,
-    useColorScheme,
     View,
     TouchableOpacity
 } from 'react-native';
-// import { useSelector } from 'react-redux';
 
-import Colors from "../../constants/Colors";
+import Colors from "../../../constants/Colors";
 
 export default function Home({ navigation }) {
-    // const user = useSelector((state)=> state.user);
-    
-    const isDarkMode = useColorScheme() === 'dark';
-
-    const backgroundColor = {
-        backgroundColor: isDarkMode ? Colors.dark : Colors.light,
-    };
-
-    const textColor = {
-        color: isDarkMode ? Colors.darkText : Colors.lightText,
-        fontSize: 20
-    }
-
     return (
         <View style={styles.container}>
             <Text style={styles.title} > Town </Text>
-            <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
-                <Text style={styles.text}> There is nothing here yet </Text>
-            </View>
             <TouchableOpacity 
                 style={styles.buttonContainer}
-                onPress={()=> {
-                    navigation.navigate('Ads')
-                }}
+                onPress={()=> {navigation.navigate('Shop')}}
             >
-                <Text style={styles.text}>View Ad</Text>
+                <Text style={styles.text}>Shop</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+                style={styles.buttonContainer}
+                onPress={()=> {navigation.navigate('Quests')}}
+            >
+                <Text style={styles.text}>Guild</Text>
             </TouchableOpacity>
         </View>
     );

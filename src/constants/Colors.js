@@ -1,6 +1,6 @@
 const Colors = Object.freeze({
 	light: 'white',
-    lightText: 'black',
+    lightText: '#ddd',
 	dark: 'grey',
     darkText: 'white',
     bottomTabs: '#696969'

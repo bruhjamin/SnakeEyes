@@ -8,15 +8,16 @@ import {
 } from 'react-native';
 import { useDispatch } from "react-redux";
 import firestore from '@react-native-firebase/firestore';
-import { useSelector } from "react-redux";
 import Colors from "../constants/Colors";
+import auth from '@react-native-firebase/auth';
 
 export default function Entry({ navigation }) {
     const [profiles, setProfiles] = useState([]);
-    const user = useSelector((state)=> state.user);
+    const user = auth().currentUser;
+
     const dispatch = useDispatch();
 
-    const getUsers = async () => {
+    const getProfiles = async () => {
         try{
             if(user.uid){
                 const subscriber = await firestore()
@@ -31,17 +32,30 @@ export default function Entry({ navigation }) {
                 setProfiles(profile.sort((a, b) => b.level - a.level)); 
             }
         } catch (e) {
-            console.log('GET ERROR',e)
+            console.log('GET ERROR', e)
         }
     }
 
     useEffect(() => {
-        getUsers();
+        getProfiles();
+        navigation.addListener('beforeRemove', (e) => {
+            // Prevent default behavior of leaving the screen
+            if(e.data.action.type === 'GO_BACK'){
+                e.preventDefault();
+            }
+        })
     }, [navigation, user]);
 
-    if(user === {}){
+    useEffect(() => {
+        if(profiles.length > 0){
+            navigation.navigate('Main', { screen: 'Home' });
+            dispatch({ type: 'SET_PROFILE', profile: profiles[0] });
+        }
+    }, [profiles])
+
+    if(!user){
         return(
-            <View></View>
+            <View/>
         );
     } else {
         return (

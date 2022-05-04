@@ -8,11 +8,12 @@ import {
   } from 'react-native';
 
 import Colors from "../constants/Colors";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 export default function Create({ navigation }) {
-    const user = useSelector((state)=> state.user);
+    const user = auth().currentUser;
 
     const [name, setName] = useState('');
     const dispatch = useDispatch();
@@ -21,7 +22,13 @@ export default function Create({ navigation }) {
         firestore().collection('users').doc(user.uid).collection('profiles').add({
             name: name,
             level: 0,
+            free_stats: 0,
             exp: 0,
+            luck: 0,
+            strengh: 5,
+            hp: 5,
+            beans: 0,
+            magical_beans: 0,
         })
     }
 
@@ -30,7 +37,7 @@ export default function Create({ navigation }) {
             <Text style={styles.title} > Create a new profile </Text>
             <TextInput
                 style={styles.input}
-                placeholderTextColor={Colors.darkText}
+                placeholderTextColor={Colors.lightText}
                 onChangeText={setName}
                 value={name}
                 placeholder="Input name"
