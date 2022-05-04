@@ -10,6 +10,14 @@ import Colors from "../../../../constants/Colors";
 import Player from "./player";
 
 export default function Battle() {
+    const [doAttack, setDoAttack] = useState(false);
+
+    useEffect(() => {
+        if(doAttack){
+            setDoAttack(false);
+        }
+    }, [doAttack])
+
     return (
         <View style={styles.gameContainer}>
             <View style={styles.displayContainer}>
