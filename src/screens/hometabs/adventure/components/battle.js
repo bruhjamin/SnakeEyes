@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     StyleSheet,
     useColorScheme,
@@ -13,6 +13,7 @@ import Player from "./player";
 
 export default function Battle() {
     // const user = useSelector((state)=> state.user);
+    const [doAttack, setDoAttack] = useState(false);
 
     const isDarkMode = useColorScheme() === 'dark';
 
@@ -20,6 +21,12 @@ export default function Battle() {
         color: isDarkMode ? Colors.darkText : Colors.lightText,
         fontSize: 20
     }
+
+    useEffect(()=>{
+        if(doAttack){
+            setDoAttack(false)
+        }
+    }, [doAttack])
 
     return (
         <View style={styles.gameContainer}>
@@ -30,8 +37,8 @@ export default function Battle() {
                     <View style={{height: 5, backgroundColor: 'red'}}/>
                 </View>
                 <View style={styles.playerContainer}> 
-                    <Player attack={false} isUser={true}/>
-                    <Player attack={false} isUser={false}/>
+                    <Player attack={doAttack} isUser={true}/>
+                    <Player attack={doAttack} isUser={false}/>
                 </View>
                 {/* TODO USER HP BAR */}
                 <View>
@@ -42,6 +49,7 @@ export default function Battle() {
             <View style={styles.actionContainer}>
                 <TouchableOpacity 
                     style={styles.buttonContainer}
+                    onPress={()=> setDoAttack(true)}
                 >
                     <Text style={textColor}>Roll</Text>
                 </TouchableOpacity>
