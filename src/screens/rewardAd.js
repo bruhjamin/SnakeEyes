@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
-import {
-    StyleSheet,
-    Text,
-    View,
-} from 'react-native';
 import { RewardedAd,RewardedAdEventType, TestIds } from 'react-native-google-mobile-ads';
 
-import Colors from "../constants/Colors";
+import Loading from "../components/loading";
 
 const adUnitId = __DEV__ ? TestIds.REWARDED : TestIds.REWARDED;
 
@@ -47,31 +42,6 @@ export default function Ads({ navigation }) {
     }, [loaded])
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>Loading Ad</Text>
-        </View>
+        <Loading />
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        justifyContent: 'center',
-        backgroundColor: Colors.dark
-    },
-    title: {
-        fontSize: 30,
-        fontWeight: 'bold'
-    }, 
-    buttonContainer: {
-        marginTop: 10,
-        padding: 10,
-        borderWidth: 1,
-        borderColor: Colors.light
-    },
-    text: {
-        color: Colors.darkText,
-        fontSize: 20
-    }
-});

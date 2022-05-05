@@ -71,9 +71,6 @@ export default function Profile({ navigation }) {
                     />)
                 }
             </View>
-            <View style={styles.id}>
-                <Text style={styles.smallText}> UId: {user.uid} </Text>
-            </View>
         </View>
     );
 }

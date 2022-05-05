@@ -10,8 +10,10 @@ import { useDispatch } from "react-redux";
 import firestore from '@react-native-firebase/firestore';
 import Colors from "../constants/Colors";
 import auth from '@react-native-firebase/auth';
+import Loading from "../components/loading";
 
 export default function Entry({ navigation }) {
+    const [loading, setLoading] = useState(true);
     const [profiles, setProfiles] = useState([]);
     const user = auth().currentUser;
 
@@ -37,6 +39,7 @@ export default function Entry({ navigation }) {
     }
 
     useEffect(() => {
+        setLoading(true);
         getProfiles();
         navigation.addListener('beforeRemove', (e) => {
             // Prevent default behavior of leaving the screen
@@ -51,11 +54,12 @@ export default function Entry({ navigation }) {
             navigation.navigate('Main', { screen: 'Home' });
             dispatch({ type: 'SET_PROFILE', profile: profiles[0] });
         }
+        setLoading(false);
     }, [profiles])
 
-    if(!user){
+    if(!user || loading){
         return(
-            <View/>
+            <Loading />
         );
     } else {
         return (
