@@ -9,7 +9,9 @@ import Config from 'react-native-config';
 import mobileAds, { MaxAdContentRating } from 'react-native-google-mobile-ads';
 
 const initialState = {
-    profile: {}
+    profile: {},
+    playerDice: 0,
+    enemyDice: 0
 }
 
 const reducer = (state = initialState, action) =>{
@@ -17,7 +19,11 @@ const reducer = (state = initialState, action) =>{
         case 'CLEAR_PROFILE':
             return {...state, profile: {}}
         case 'SET_PROFILE':
-            return {...state, profile: action?.profile ? action.profile : null}
+            return {...state, profile: action?.profile ? action.profile : {}}
+        case 'SET_PLAYER_DICE':
+            return {...state, playerDice: action?.playerDice ? action.playerDice : 0}
+        case 'SET_ENEMY_DICE':
+            return {...state, enemyDice: action?.enemyDice ? action.enemyDice : 0}
 	}
 	return state
 }

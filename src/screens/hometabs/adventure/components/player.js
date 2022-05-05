@@ -6,16 +6,21 @@ import {
     Text
 } from 'react-native';
 import Dice from "./dice6";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const width = Dimensions.get('window').width;
 
 export default function Player({ attack, isUser }) {
     const [doAttack, setDoAttack] = useState(false);
     const [roll, setRoll] = useState(0);
+
+    const dispatch = useDispatch();
+    const selector = useSelector(state => state.playerDice);
     
     useEffect(() => {
         if(attack){
-            setDoAttack(attack)
+            setDoAttack(attack);
         }
     }, [attack])
 
@@ -24,14 +29,22 @@ export default function Player({ attack, isUser }) {
             //animate attack
             setTimeout(()=> setDoAttack(false), 200);
             setRoll(parseInt(Dice(6)));
+
+            if(isUser){
+                dispatch({ type: 'SET_PLAYER_DICE', playerDice: roll});
+                
+            }else{
+                dispatch({ type: 'SET_ENEMY_DICE', enemyDice: roll});
+            }
+            console.log(selector);
         }
     }, [doAttack])
 
-    useEffect(() => {
-        if(roll != 0){
-            setTimeout(()=> setRoll(0), 800);
-        }
-    }, [roll])
+    // useEffect(() => {
+    //     if(roll != 0){
+    //         setTimeout(()=> setRoll(0), 800);
+    //     }
+    // }, [roll])
     
     return (
         <View 
@@ -39,7 +52,7 @@ export default function Player({ attack, isUser }) {
                 [styles.player, {backgroundColor: (roll > 3) ? 'green' : 'blue'}]
             }
         >
-            <Text>{roll}</Text>
+            <Text style={{color: 'white'}}>{roll}</Text>
         </View>
     );
 }
