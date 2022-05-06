@@ -12,7 +12,6 @@ import Colors from "../../../constants/Colors";
 
 export default function Profile({ navigation }) {
     const profile = useSelector((state)=> state.profile);
-    const user = auth().currentUser;
 
     return (
         <View style={styles.container}>

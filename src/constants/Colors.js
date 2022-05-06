@@ -3,7 +3,8 @@ const Colors = Object.freeze({
     lightText: '#ddd',
 	dark: 'grey',
     darkText: 'white',
-    bottomTabs: '#696969'
+    bottomTabs: '#696969',
+    dot: 'black'
 });
 
 export default Colors;

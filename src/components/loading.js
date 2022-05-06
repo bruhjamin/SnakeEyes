@@ -15,22 +15,22 @@ const FadeInView = (props) => {
             Animated.sequence([
                 Animated.timing(fadeAnim, {
                     toValue:  0,
-                    duration: 10,
+                    duration: 100,
                     useNativeDriver: false
                 }),
                 Animated.timing(fadeAnim, {
                     toValue:  0,
-                    duration: 1000 * (4 - props.to),
+                    duration: 900 * (4 - props.to),
                     useNativeDriver: false
                 }),
                 Animated.timing(fadeAnim, {
                     toValue: 1,
-                    duration: 10,
+                    duration: 100,
                     useNativeDriver: false
                 }),
                 Animated.timing(fadeAnim, {
                     toValue: 1,
-                    duration: 1000 * (props.to),
+                    duration: 900 * (props.to),
                     useNativeDriver: false
                 })
             ])
