@@ -10,13 +10,11 @@ import { useSelector } from "react-redux";
 import Colors from "../../../../constants/Colors";
 import Player from "./player";
 import HpBar from "./hpBar";
-import Dice from "./dice";
+import { Dice, Crit } from "./dice";
 import D6 from "../../../../components/dice6";
-import { useRef } from "react";
 
-export default function Battle({ enemy }) {
+export default function Battle({ enemy, /* navigation */ }) {
     const profile = useSelector((state)=> state.profile);
-    const [battleOngoing, setBattleOngoing] = useState(0);
     const [currentHp, setCurrentHp] = useState(profile.hp * 5);
     const maxHp = profile.hp * 5;
     const [currentEnemyHp, setCurrentEnemyHp] = useState(enemy.hp * 5);
@@ -24,35 +22,74 @@ export default function Battle({ enemy }) {
     const [playRoll, setPlayRoll] = useState(0);
     const [otherRoll, setOtherRoll] = useState(0);
     const [disableActions, setDisableActions] = useState(false);
-    const timer = useRef(null);
+    const [turnMessage, setTurnMessage] = useState('');
+    const [doRest, setDoRest] = useState(false);
 
     const attack = () => {
         setDisableActions(true);
-        let playerA = Dice(6, 1);
-        let enemyA = Dice(enemy.dice, 1);
-        setPlayRoll(playerA);
-        setOtherRoll(enemyA);
-        setCurrentEnemyHp(currentEnemyHp - playerA);
-        setCurrentHp(currentHp - enemyA);
-        timer.current = setTimeout(() => setDisableActions(false), 200);
+        let playerRoll = Dice(6, 1);
+        let enemyRoll = Dice(enemy.dice, 1);
+        let playerCrit = Crit(profile.luck);
+        let enemyCrit = Crit(enemy.luck);
+
+        if(playerRoll > enemyRoll){
+            let dmg = playerCrit ? profile.strength * 2 : profile.strength;
+            setCurrentEnemyHp(currentEnemyHp - dmg);
+            setTurnMessage(`You${playerCrit ? ' crit and' : ''} did ${dmg} damage`);
+        } else if(playerRoll < enemyRoll) {
+            let dmg = enemyCrit ? enemy.strength * 2 : enemy.strength;
+            setCurrentHp(currentHp - dmg);
+            setTurnMessage(`${enemy.name} did ${dmg} damage`);
+        } else if(playerRoll === enemyRoll) {
+            setTurnMessage(`Your attack was parried`);
+        }
+        setPlayRoll(playerRoll);
+        setOtherRoll(enemyRoll);
+        setDisableActions(false);
         setDoAttack(false);
+    }
+
+    const rest = () => {
+        setDisableActions(true);
+        let playerRoll = Dice(6, 1);
+        let enemyRoll = Dice(enemy.dice, 1);
+        let enemyCrit = Crit(enemy.luck);
+
+        if(playerRoll > enemyRoll){
+            if(currentHp + (maxHp / 4) > maxHp){
+                setTurnMessage(`You healed ${maxHp - currentHp} hit points`);
+                setCurrentHp(maxHp);
+            } else {
+                setTurnMessage(`You healed ${Math.ceil(currentHp + (maxHp / 4))} hit points`);
+                setCurrentHp(Math.ceil(currentHp + (maxHp / 4)));
+            }
+        } else if(playerRoll < enemyRoll) {
+            let dmg = enemyCrit ? enemy.strength * 4 : enemy.strength * 2;
+            setCurrentHp(currentHp - dmg);
+            setTurnMessage(`You were unarmed and took ${dmg} damage`);
+        } else if(playerRoll === enemyRoll) {
+            setTurnMessage(`Your rest was disturbed`);
+        }
+
+        setPlayRoll(playerRoll);
+        setOtherRoll(enemyRoll);
+        setDisableActions(false);
+        setDoRest(false);
     }
 
     useEffect(() => {
         if(currentHp <= 0){
             setCurrentHp(0);
-            clearTimeout(timer.current);
             setDisableActions(true);
-            setBattleOngoing(2);
+            setTurnMessage(`You beat the ${enemy.name}.`);
         }
     }, [currentHp]);
 
     useEffect(() => {
         if(currentEnemyHp <= 0){
             setCurrentEnemyHp(0);
-            clearTimeout(timer.current);
             setDisableActions(true);
-            setBattleOngoing(1);
+            setTurnMessage(`You beat the ${enemy.name}.`);
         }
     }, [currentEnemyHp]);
 
@@ -60,39 +97,35 @@ export default function Battle({ enemy }) {
         if(doAttack){
             attack();
         }
-    }, [doAttack])
+    }, [doAttack]);
+
+    useEffect(() => {
+        if(doRest){
+            rest();
+        }
+    }, [doRest]);
 
     return (
         <View style={styles.gameContainer}>
-            {battleOngoing === 0? 
-                <View style={styles.displayContainer}>
-                    <View style={styles.displayEnemy}>
-                        <HpBar isUser={false} maxHp={enemy.hp * 5} currentHp={currentEnemyHp}/>
-                        <View style={styles.playerContainer}> 
-                            <D6 dots={otherRoll}/>
-                            <Player attack={doAttack} rolled={otherRoll}/>
-                        </View>
+            <View style={styles.displayContainer}>
+                <View style={styles.displayEnemy}>
+                    <HpBar isUser={false} maxHp={enemy.hp * 5} currentHp={currentEnemyHp}/>
+                    <View style={styles.playerContainer}> 
+                        <D6 dots={otherRoll}/>
+                        <Player attack={doAttack} rolled={otherRoll}/>
                     </View>
-                    <View>
-                        <Text >some text</Text>
-                    </View>
-                    <View style={styles.displayPlayer}>
-                        <HpBar isUser={true} maxHp={maxHp} currentHp={currentHp}/>
-                        <View style={styles.playerContainer}> 
-                            <Player attack={doAttack} rolled={playRoll}/>
-                            <D6 dots={playRoll}/>
-                        </View>
-                    </View>
-                </View> 
-                : 
-                <View style={styles.displayContainer}>
-                    {battleOngoing === 1 ? 
-                        <Text>You beat the {enemy.name}</Text>
-                        :
-                        <Text>Try again next time :(</Text>
-                    }
                 </View>
-            }
+                <View>
+                    <Text>{turnMessage}</Text>
+                </View>
+                <View style={styles.displayPlayer}>
+                    <HpBar isUser={true} maxHp={maxHp} currentHp={currentHp}/>
+                    <View style={styles.playerContainer}> 
+                        <Player attack={doAttack} rolled={playRoll}/>
+                        <D6 dots={playRoll}/>
+                    </View>
+                </View>
+            </View> 
             <View style={styles.actionContainer}>
                 <TouchableOpacity 
                     style={styles.buttonContainer}
@@ -104,6 +137,7 @@ export default function Battle({ enemy }) {
                 <TouchableOpacity 
                     style={styles.buttonContainer}
                     disabled={disableActions}
+                    onPress={()=> setDoRest(true)}
                 >
                     <Text style={styles.text}>Rest</Text>
                 </TouchableOpacity>

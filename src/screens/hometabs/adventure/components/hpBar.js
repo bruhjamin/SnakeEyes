@@ -6,6 +6,7 @@ import {
     Text,
     Dimensions
 } from 'react-native';
+import Colors from "../../../../constants/Colors";
 
 const width = Dimensions.get('window').width - 80;
 
@@ -40,13 +41,18 @@ export default function HpBar({ maxHp, currentHp, isUser }) {
             <Text>{currentHp} / {maxHp}</Text>
             </View>
             <View style={[styles.hpBar, {width: width * (currentHp / maxHp)}]}/>
+            <View style={styles.bottomBar}/>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     hpBar: {
-        height: 5, 
+        height: 4, 
         backgroundColor: 'red'
+    },
+    bottomBar: {
+        height: 1, 
+        backgroundColor: Colors.bottomTabs
     },
 });
