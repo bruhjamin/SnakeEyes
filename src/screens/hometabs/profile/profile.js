@@ -1,74 +1,84 @@
-import { Icon } from "@rneui/themed";
-import React from "react";
-import {
-    StyleSheet,
-    Text,
-    View,
-} from 'react-native';
-import { useSelector } from 'react-redux';
-import auth from '@react-native-firebase/auth';
+import {Icon} from '@rneui/themed';
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import {useSelector} from 'react-redux';
 
-import Colors from "../../../constants/Colors";
+import Colors from '../../../constants/Colors';
 
-export default function Profile({ navigation }) {
-    const profile = useSelector((state)=> state.profile);
+/*
+    navigation > bottomTabs > profile/navigation > profile
+    Main landing page of the profile bottom tab
+    Displays the users stats 
+*/
+export default function Profile({navigation}) {
+    const profile = useSelector(state => state.profile);
 
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>
-                <Text style={styles.title} onPress={()=> console.log(profile)}> {profile.name} </Text>
-                <Icon 
-                    name='cog' 
-                    type='material-community' 
-                    color={Colors.light} 
-                    size={30} 
-                    onPress={()=> {navigation.navigate('Settings')}}
+                <Text style={styles.title} onPress={() => console.log(profile)}>
+                    {profile.name}
+                </Text>
+                <Icon
+                    name="cog"
+                    type="material-community"
+                    color={Colors.light}
+                    size={30}
+                    onPress={() => {
+                        navigation.navigate('Settings');
+                    }}
                 />
             </View>
             <View style={styles.buttonContainer}>
                 <Text style={styles.text}> Level: {profile.level} </Text>
-                {profile.free_stats > 0 && 
-                    (<Text style={styles.text}> {profile.free_stats} </Text>)
-                }
+                {profile.free_stats > 0 && (
+                    <Text style={styles.text}> {profile.free_stats} </Text>
+                )}
             </View>
             <View style={styles.buttonContainer}>
                 <Text style={styles.text}> HP: {profile.hp * 5} </Text>
-                {profile.free_stats > 0 && 
-                    (<Icon 
-                        name='plus' 
-                        type='material-community' 
-                        color={Colors.light} 
-                        size={30} 
+                {profile.free_stats > 0 && (
+                    <Icon
+                        name="plus"
+                        type="material-community"
+                        color={Colors.light}
+                        size={30}
                         containerStyle={styles.icon}
-                        onPress={()=> {/*add to stat*/}}
-                    />)
-                }
+                        onPress={() => {
+                            /*add to stat*/
+                        }}
+                    />
+                )}
             </View>
             <View style={styles.buttonContainer}>
                 <Text style={styles.text}> Strength: {profile.strength} </Text>
-                {profile.free_stats > 0 && 
-                    (<Icon 
-                        name='plus' 
-                        type='material-community' 
-                        color={Colors.light} 
-                        size={30} 
+                {profile.free_stats > 0 && (
+                    <Icon
+                        name="plus"
+                        type="material-community"
+                        color={Colors.light}
+                        size={30}
                         containerStyle={styles.icon}
-                        onPress={()=> {/*add to stat*/}}
-                    />)
-                }
+                        onPress={() => {
+                            /*add to stat*/
+                        }}
+                    />
+                )}
             </View>
             <View style={styles.buttonContainer}>
                 <Text style={styles.text}> Luck: {profile.luck} </Text>
-                {profile.free_stats > 0 && 
-                    (<Icon 
-                        name='plus' 
-                        type='material-community' 
-                        color={Colors.light} 
-                        size={30} 
+                {profile.free_stats > 0 && (
+                    <Icon
+                        name="plus"
+                        type="material-community"
+                        color={Colors.light}
+                        size={30}
                         containerStyle={styles.icon}
-                        onPress={()=> {/*add to stat*/}}
-                    />)
-                }
+                        onPress={() => {
+                            /*add to stat*/
+                        }}
+                    />
+                )}
             </View>
         </View>
     );
@@ -78,22 +88,22 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: Colors.dark
+        backgroundColor: Colors.dark,
     },
-    titleContainer:{
+    titleContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     title: {
         color: Colors.darkText,
         fontSize: 30,
-        fontWeight: 'bold'
-    }, 
+        fontWeight: 'bold',
+    },
     id: {
-        position: "absolute",
+        position: 'absolute',
         bottom: 0,
-        right: 0
+        right: 0,
     },
     buttonContainer: {
         marginTop: 10,
@@ -101,18 +111,18 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: Colors.light,
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     text: {
         color: Colors.darkText,
-        fontSize: 20
+        fontSize: 20,
     },
-    smallText:{
+    smallText: {
         color: Colors.darkText,
-        fontSize: 14
+        fontSize: 14,
     },
     icon: {
         backgroundColor: 'rgba(0, 0, 0, 0.3)',
-        borderRadius: 15
-    }
+        borderRadius: 15,
+    },
 });

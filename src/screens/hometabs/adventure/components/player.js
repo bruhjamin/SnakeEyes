@@ -1,31 +1,16 @@
-import React, { useState, useEffect } from "react";
-import {
-    StyleSheet,
-    View,
-    Dimensions,
-    Text
-} from 'react-native';
-import Colors from "../../../../constants/Colors";
+import React from 'react';
+import {StyleSheet, View, Dimensions, Text} from 'react-native';
+import Colors from '../../../../constants/Colors';
 
 const width = Dimensions.get('window').width - 80;
 
-export default function Player({ attack, rolled }) {
-    const [doAttack, setDoAttack] = useState(false);
-    
-    useEffect(() => {
-        if(attack){
-            setDoAttack(attack);
-        }
-    }, [attack])
-
-    useEffect(() => {
-        if(doAttack){
-            //animate attack
-            setTimeout(()=> setDoAttack(false), 200);
-        }
-    }, [doAttack])
-    
+/*
+    Display the player asset
+    This is kinda useless rn 
+*/
+export default function Player() {
     return (
+        // Temporary measure for before I add assets
         <View style={styles.player}>
             <Text>missing image</Text>
         </View>
@@ -34,10 +19,10 @@ export default function Player({ attack, rolled }) {
 
 const styles = StyleSheet.create({
     player: {
-        backgroundColor: 'green',
+        backgroundColor: Colors.light,
         width: width / 4,
         height: width / 4,
         borderRadius: 5,
-        padding: width / 32
+        padding: width / 32,
     },
 });

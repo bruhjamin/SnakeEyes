@@ -1,31 +1,30 @@
-import { Icon } from "@rneui/themed";
-import React from "react";
-import {
-    StyleSheet,
-    Text,
-    View,
-    TouchableOpacity
-} from 'react-native';
+import {Icon} from '@rneui/themed';
+import React from 'react';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 // import { useSelector } from 'react-redux';
 import auth from '@react-native-firebase/auth';
 
-import Colors from "../../../constants/Colors";
+import Colors from '../../../constants/Colors';
 
-export default function Settings({ navigation }) {
+/*
+    navigation > bottomTabs > profile/navigation > profile > settings
+    Where the user their settings
+*/
+export default function Settings({navigation}) {
     // const profile = useSelector((state)=> state.profile);
     const user = auth().currentUser;
 
     return (
         <View style={styles.container}>
             <View style={styles.headerContainer}>
-                <Icon 
-                    name="arrow-left" 
-                    type="material-community" 
-                    color={Colors.light} 
+                <Icon
+                    name="arrow-left"
+                    type="material-community"
+                    color={Colors.light}
                     size={30}
                     containerStyle={styles.icon}
-                    onPress={()=> {
-                        navigation.goBack()
+                    onPress={() => {
+                        navigation.goBack();
                     }}
                 />
                 <Text style={styles.title}> Settings </Text>
@@ -33,13 +32,12 @@ export default function Settings({ navigation }) {
             {/* <View style={styles.buttonContainer}>
                 <Text style={styles.text}> {profile.name} </Text>
             </View> */}
-            <TouchableOpacity 
+            <TouchableOpacity
                 style={styles.buttonContainer}
-                onPress={()=> {
+                onPress={() => {
                     navigation.navigate('Login');
                     auth().signOut();
-                }}
-            >
+                }}>
                 <Text style={styles.text}> Logout </Text>
             </TouchableOpacity>
             <View style={styles.id}>
@@ -53,26 +51,26 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: Colors.dark
+        backgroundColor: Colors.dark,
     },
-    headerContainer:{
+    headerContainer: {
         flexDirection: 'row',
         alignItems: 'center',
     },
-    titleContainer:{
+    titleContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     title: {
         color: Colors.darkText,
         fontSize: 30,
-        fontWeight: 'bold'
-    }, 
+        fontWeight: 'bold',
+    },
     id: {
-        position: "absolute",
+        position: 'absolute',
         bottom: 0,
-        right: 0
+        right: 0,
     },
     buttonContainer: {
         marginTop: 10,
@@ -80,18 +78,18 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: Colors.light,
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     text: {
         color: Colors.darkText,
-        fontSize: 20
+        fontSize: 20,
     },
-    smallText:{
+    smallText: {
         color: Colors.darkText,
-        fontSize: 14
+        fontSize: 14,
     },
     icon: {
         backgroundColor: 'rgba(0, 0, 0, 0.3)',
-        borderRadius: 15
-    }
+        borderRadius: 15,
+    },
 });

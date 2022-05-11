@@ -1,58 +1,55 @@
-import React, { useEffect, useRef } from "react";
-import {
-    StyleSheet,
-    Text,
-    View,
-    Animated
-} from 'react-native';
-import Colors from "../constants/Colors";
+import React, {useEffect, useRef} from 'react';
+import {StyleSheet, Text, View, Animated} from 'react-native';
+import Colors from '../constants/Colors';
 
-const FadeInView = (props) => {
-    const fadeAnim = useRef(new Animated.Value(0)).current  // Initial value for opacity: 0
+const FadeInView = props => {
+    const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
 
     useEffect(() => {
         Animated.loop(
             Animated.sequence([
                 Animated.timing(fadeAnim, {
-                    toValue:  0,
+                    toValue: 0,
                     duration: 100,
-                    useNativeDriver: false
+                    useNativeDriver: false,
                 }),
                 Animated.timing(fadeAnim, {
-                    toValue:  0,
+                    toValue: 0,
                     duration: 900 * (4 - props.to),
-                    useNativeDriver: false
+                    useNativeDriver: false,
                 }),
                 Animated.timing(fadeAnim, {
                     toValue: 1,
                     duration: 100,
-                    useNativeDriver: false
+                    useNativeDriver: false,
                 }),
                 Animated.timing(fadeAnim, {
                     toValue: 1,
-                    duration: 900 * (props.to),
-                    useNativeDriver: false
-                })
-            ])
+                    duration: 900 * props.to,
+                    useNativeDriver: false,
+                }),
+            ]),
         ).start();
-    }, [fadeAnim])
+    }, [fadeAnim]);
 
     return (
         <Animated.View
             style={{
                 ...props.style,
-                opacity: fadeAnim
-            }}
-        >
+                opacity: fadeAnim,
+            }}>
             {props.children}
         </Animated.View>
     );
-}
+};
 
+/*
+    The loading screen with 3 loading dots
+*/
 export default function Loading() {
     return (
         <View style={styles.container}>
-            <View style={{flexDirection: 'row'}}> 
+            <View style={{flexDirection: 'row'}}>
                 <Text style={styles.text}> Loading </Text>
                 <FadeInView to={3}>
                     <Text style={styles.text}> . </Text>
@@ -74,10 +71,10 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         justifyContent: 'flex-end',
         padding: 20,
-        backgroundColor: Colors.dark
+        backgroundColor: Colors.dark,
     },
     text: {
         color: Colors.darkText,
-        fontSize: 20
+        fontSize: 20,
     },
 });

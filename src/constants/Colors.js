@@ -1,10 +1,13 @@
+/*
+    The main colors in the app
+*/
 const Colors = Object.freeze({
-	light: 'white',
+    light: 'white',
     lightText: '#ddd',
-	dark: 'grey',
+    dark: 'grey',
     darkText: 'white',
     bottomTabs: '#696969',
-    dot: 'black'
+    dot: 'black',
 });
 
 export default Colors;

@@ -1,58 +1,63 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import {
-    StyleSheet,
-    View,
-    Text,
-    Dimensions
-} from 'react-native';
-import Colors from "../../../../constants/Colors";
+import React, {useEffect} from 'react';
+import {useState} from 'react';
+import {StyleSheet, View, Text, Dimensions} from 'react-native';
+import Colors from '../../../../constants/Colors';
 
 const width = Dimensions.get('window').width - 80;
 
-export default function HpBar({ maxHp, currentHp, isUser }) {
+/*
+    Display a bar corresponding to the amount of hp left / max hp
+*/
+export default function HpBar({maxHp, currentHp, isUser}) {
     const barStyle = {
         flexDirection: 'row',
-        justifyContent: isUser ? 'flex-end' : 'flex-start'
-    }
+        justifyContent: isUser ? 'flex-end' : 'flex-start',
+    };
 
     const [loading, setLoading] = useState(true);
 
+    // double check if the maxHp value has mounted before using it
     useEffect(() => {
-        if(!isNaN(maxHp)){
+        if (!isNaN(maxHp)) {
             setLoading(false);
         }
     }, [maxHp]);
 
-    if(loading){
+    if (loading) {
         return (
             <View>
                 <View style={barStyle}>
-                    <Text>{currentHp} / {maxHp}</Text>
+                    <Text>
+                        {currentHp} / {maxHp}
+                    </Text>
                 </View>
-                <View style={styles.hpBar}/>
+                <View style={styles.hpBar} />
             </View>
-        )
+        );
     }
 
     return (
         <View>
             <View style={barStyle}>
-            <Text>{currentHp} / {maxHp}</Text>
+                <Text>
+                    {currentHp} / {maxHp}
+                </Text>
             </View>
-            <View style={[styles.hpBar, {width: width * (currentHp / maxHp)}]}/>
-            <View style={styles.bottomBar}/>
+            <View
+                style={[styles.hpBar, {width: width * (currentHp / maxHp)}]}
+            />
+            <View style={styles.bottomBar} />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     hpBar: {
-        height: 4, 
-        backgroundColor: 'red'
+        height: 4,
+        backgroundColor: 'red',
     },
     bottomBar: {
-        height: 1, 
-        backgroundColor: Colors.bottomTabs
+        height: 1,
+        backgroundColor: Colors.bottomTabs,
     },
 });

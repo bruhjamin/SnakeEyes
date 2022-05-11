@@ -8,6 +8,11 @@ import {
 
 import Colors from "../../../constants/Colors";
 
+/*
+    navigation > bottomTabs > adventure/navigation > adventure
+    Main landing page of the adventure bottom tab
+    just a navigation hub for the adventure screens
+*/
 export default function Adventure({ navigation }) {
     return (
         <View style={styles.container}>
